@@ -373,12 +373,15 @@ loadTour()
     apiHost: "https://cobachatbot-production.up.railway.app"
   });
 
-  // ✅ Paksa virtual tour menghitung ulang ukuran setelah chatbot dimuat
+  // ✅ Untuk Android: Paksa ulang perhitungan skala virtual tour
   setTimeout(() => {
-    if (typeof window.dispatchEvent === "function") {
-        window.dispatchEvent(new Event('resize'));
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    if (isAndroid && typeof onLoad === 'function') {
+      onLoad(); // Panggil ulang untuk trigger resize logic
+    } else if (typeof window.dispatchEvent === "function") {
+      window.dispatchEvent(new Event('resize'));
     }
-  }, 500);
+  }, 800);
 </script>
 
 </body>
